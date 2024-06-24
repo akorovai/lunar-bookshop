@@ -1,0 +1,19 @@
+package dev.s24377.lunar_bookshop.supplier;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class AddressDTO {
+
+    private Long id;
+    private String street;
+    private String city;
+    private String postalCode;
+    private String country;
+}

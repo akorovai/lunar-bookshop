@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head (pageTitle='Promotions')}">
+    <title>Index</title>
+</head>
+<body>
+<div class="main-container">
+    <div th:replace="~{fragments/navbar :: div}"></div>
+    <div class="main-box">
+        <div class="main-box-header">
+            <div>
+                <div class="main-box-header-left">
+                    <p>Wybór promocji</p>
+                </div>
+                <a href="#">
+                    <div class="book-promotion-button">
+                        <img th:src="@{/Vector.svg}" alt="plus">
+                        <p>Stwórz promocję </p>
+                    </div>
+                </a>
+            </div>
+            <div class="line"></div>
+        </div>
+        <div th:switch="${proms}" style="width: 100%; height: 100%">
+            <div th:case="null" class="action-container">
+                <div>
+                    <p>Bląd wyświetlenie do promocji</p>
+                    <p style="color: rgba(39, 41, 50, 0.50); font-family: Montserrat,serif; font-size: 20px; font-style: normal; font-weight: 600; line-height: normal;">
+                        Przeładuj stronę
+                    </p>
+                </div>
+            </div>
+            <div th:case="${proms.isEmpty()}" class="action-container">
+                <div>
+                    <p>Brak aktywnych promocji </p>
+                </div>
+            </div>
+            <div th:case="*" class="promotion-list">
+                <ul>
+                    <li th:each="pr : ${proms}" class="promotion-element"
+                        th:href="@{'/promotions/' + ${pr.getId()} + '/books'}">
+                        <a th:href="@{'/promotions/' + ${pr.getId()} + '/books'}">
+                            <div class="promotion">
+                                <div class="promotion-info">
+                                    <div class="promotion-id">
+                                        <p th:text="'№'  + ${pr.getId()}"></p>
+                                    </div>
+                                    <div class="promotion-name">
+                                        <p th:text="${pr.getTitle()}"></p>
+                                        <p th:text="${pr.getType()}"></p>
+                                    </div>
+                                    <div class="promotion-description">
+                                        <p th:text="${pr.getDescription()}"></p>
+                                    </div>
+                                </div>
+                                <div class="promotion-publication-date">
+                                    <p th:text="${pr.startDate} + ' - ' + ${pr.startDate.plusDays(pr.period)}"></p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="overlay" class="overlay">
+    <div class="overlay-content">
+        <p id="overlay-message"></p>
+    </div>
+</div>
+<div th:replace="~{fragments/footer :: body}"></div>
+</body>
+</html>

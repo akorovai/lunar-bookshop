@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head (pageTitle='Promotion Books')}">
+    <title>Promotion Books</title>
+</head>
+<body>
+<div class="main-container">
+    <div th:replace="~{fragments/navbar :: div}"></div>
+    <div class="main-box">
+        <div class="main-box-header">
+            <div>
+                <div class="main-box-header-left">
+                    <a th:href="@{/promotions}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                             fill="none">
+                            <path d="M22 12L2 12M2 12L10.3333 22M2 12L10.3333 2" stroke="#272932" stroke-width="3"
+                                  stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <p>Wybór promocji</p>
+                </div>
+                <a th:href="@{'/promotions/' + ${promotionId} + '/books/add'}">
+                    <div class="book-promotion-button">
+                        <img th:src="@{/Vector.svg}" alt="plus">
+                        <p>Dodaj Książkę</p>
+                    </div>
+                </a>
+            </div>
+            <div class="line"></div>
+        </div>
+        <div th:if="${books.isEmpty()}">
+            <div class="action-container">
+                <div>
+                    <p>Lista książek jest pusta</p>
+                </div>
+            </div>
+        </div>
+        <div th:unless="${books.isEmpty()}" class="book-list">
+            <ul>
+                <li th:each="book : ${books}" class="book-element">
+                    <div class="book-header">
+                        <div class="book-info">
+                            <div class="book-isbn">
+                                <p th:text="'ISBN: '  + ${book.isbn}">ISBN</p>
+                            </div>
+                            <div class="book-name">
+                                <p th:text="${book.title}">Book Title</p>
+                            </div>
+                            <div class="book-author">
+                                <p th:text="${book.author}">Author</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-footer">
+                        <p th:text="${book.publicationDate}">Book Title</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="overlay" class="overlay">
+    <div class="overlay-content">
+        <p id="overlay-message"></p>
+    </div>
+</div>
+<div th:replace="~{fragments/footer :: body}"></div>
+</body>
+</html>

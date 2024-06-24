@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head (pageTitle='Books')}">
+    <title>Books</title>
+</head>
+<body>
+<div class="main-container">
+    <div th:replace="~{fragments/navbar :: div}"></div>
+    <div class="main-box">
+        <div class="main-box-header">
+            <p>Wybór książki</p>
+            <div class="line"></div>
+        </div>
+        <div th:if="${books.isEmpty()}">
+            <div class="action-container">
+                <div>
+                    <p>Lista książek jest pusta</p>
+                </div>
+            </div>
+        </div>
+        <div th:unless="${books.isEmpty()}" class="book-list">
+            <ul>
+                <li th:each="book : ${books}" class="book-element">
+                    <div class="book-header">
+                        <div class="book-info">
+                            <div class="book-isbn">
+                                <p th:text="'ISBN: '  + ${book.isbn}">ISBN</p>
+                            </div>
+                            <div class="book-name">
+                                <p th:text="${book.title}">Book Title</p>
+                            </div>
+                            <div class="book-author">
+                                <p th:text="${book.author}">Author</p>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0);" th:onclick="'assignToPromotion(\'' + ${book.isbn} + '\')'">
+                            <div class="book-promotion-button">
+                                <img th:src="@{/Vector.svg}" alt="plus">
+                                <p>Dodaj do Promocji</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="book-footer">
+                        <p th:text="${book.publicationDate}">Book Title</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="overlay" class="overlay">
+    <div class="overlay-content">
+        <p id="overlay-message"></p>
+    </div>
+</div>
+<div th:replace="~{fragments/footer :: body}"></div>
+</body>
+</html>
